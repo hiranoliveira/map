@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<style>
+			body {
+				background-color: black;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+			}
+		</style>
+		<link
+			rel="stylesheet"
+			href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+		/>
+		<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+	</head>
+	<body>
+		<div id="map" style="width: 800px; height: 500px"></div>
+		<script>
+			var latitude = -21.53;
+			// var latitude = -15.53;
+			var longitude = -47.1;
+			// var longitude = -55.54;
+			var zoom = 6;
+			// Inicialize o mapa
+			var map = L.map("map").setView([latitude, longitude], zoom);
+
+			// Adicione um provedor de mapa (por exemplo, OpenStreetMap)
+			L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+				attribution:
+					'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+			}).addTo(map);
+
+			// Adicione marcadores para pontos de venda e empresas parceiras
+			var pontosDeVenda = [
+				{
+					nome: "Bacco Spirit Curitiba <br/> Endereço Rua 67588787",
+					latitude: -25.445957997,
+					longitude: -49.18348,
+				},
+				{
+					nome: "Bacco Spirit Belo Horizonte<br/> Endereço Rua 13123132",
+					latitude: -19.869404,
+					longitude: -43.94289,
+				},
+			];
+
+			var empresasParceiras = [
+				{
+					nome: "Empresa Parceira 1",
+					latitude: -25.22,
+					longitude: -49.55,
+				},
+				{
+					nome: "Empresa Parceira 2",
+					latitude: -19.67,
+					longitude: -43.5,
+				},
+			];
+
+			// Ícone personalizado vermelho para empresas parceiras
+			var redIcon = L.icon({
+				iconUrl: "red-pin.png", // URL da imagem do marcador vermelho
+				iconSize: [30, 41], // Tamanho da imagem do marcador
+				iconAnchor: [12, 41], // Ponto de ancoragem do marcador
+				popupAnchor: [1, -34], // Ponto de ancoragem do popup em relação ao marcador
+			});
+			var greenIcon = L.icon({
+				iconUrl: "green-pin.png", // URL da imagem do marcador vermelho
+				iconSize: [30, 41], // Tamanho da imagem do marcador
+				iconAnchor: [12, 41], // Ponto de ancoragem do marcador
+				popupAnchor: [1, -34], // Ponto de ancoragem do popup em relação ao marcador
+			});
+
+			// Adicione marcadores para pontos de venda
+			pontosDeVenda.forEach(function (ponto) {
+				L.marker([ponto.latitude, ponto.longitude], {
+					icon: greenIcon,
+				})
+					.addTo(map)
+					.bindPopup(ponto.nome);
+			});
+
+			// Adicione marcadores para empresas parceiras com ícone personalizado
+			empresasParceiras.forEach(function (empresa) {
+				L.marker([empresa.latitude, empresa.longitude], {
+					icon: redIcon,
+				})
+					.addTo(map)
+					.bindPopup(empresa.nome);
+			});
+		</script>
+	</body>
+</html>
